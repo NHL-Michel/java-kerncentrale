@@ -4,7 +4,6 @@ import java.util.Set;
 
 public class Reactor implements Statusable {
     private Set<Core> cores;
-    private State status;
 
     public Reactor() {
         this.cores = new HashSet<Core>();
@@ -18,16 +17,16 @@ public class Reactor implements Statusable {
         this.cores = cores;
     }
 
-    private void addCore(Core c){
+    private void addCore(Core c) {
         this.cores.add(c);
     }
 
-    private Core removeCore(Core c){
+    private Core removeCore(Core c) {
 
         Iterator<Core> it = this.cores.iterator();
-        while (it.hasNext()){
+        while (it.hasNext()) {
             Core tmpCore = it.next();
-            if (tmpCore.equals(c)){
+            if (tmpCore.equals(c)) {
                 it.remove();
                 return tmpCore;
             }
@@ -35,28 +34,12 @@ public class Reactor implements Statusable {
         return null;
     }
 
-    public String getStatus(){
-        this.setStatus();
-        return this.status.toString();
-    };
-
-    /** setStatus():
-     *
-     * set the state of the Reactor based on the remaining percentage of all available cores.
-     *
-     */
-    public void setStatus(){
-        boolean stable = true;
-        for (Core core : this.cores){
-            if (core.getRemainingPercentage() < 0.2){
-                stable = false;
-                break;
+    public State getStatus() {
+        for (Core core : this.cores) {
+            if (core.getRemainingPercentage() <= 0.2) {
+                return State.ATTENTION;
             }
         }
-        if (stable) {
-            this.status = State.STABLE;
-        } else {
-            this.status = State.ATTENTION;
-        }
-    };
+        return State.STABLE;
+    }
 }

@@ -1,7 +1,7 @@
-public class Nhlium extends Core {
+public class Nhlium extends Core  {
 
     @Override
-    public SplitResult split(int tmpInKelvin, int timeInSeconds){
+    public SplitResult split(int tmpInKelvin, int timeInSeconds) throws MeltDownException {
         float steam;
         float residualHeatInKelvin;
         this.remainingPercentage = this.remainingPercentage - (0.06f * timeInSeconds);
@@ -14,7 +14,10 @@ public class Nhlium extends Core {
             residualHeatInKelvin = tmpInKelvin / 0.5f;
         }
 
+        if (timeInSeconds > 60 && tmpInKelvin > 100 || this.remainingPercentage < 0.1){
+            throw new MeltDownException("NHLIUM MELTDOWN, WE F*CKED UP ");
+        }
+
         return new SplitResult(residualHeatInKelvin, steam);
     }
-
 }
