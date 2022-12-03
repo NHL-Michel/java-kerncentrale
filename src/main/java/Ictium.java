@@ -1,9 +1,13 @@
 public class Ictium extends Core {
 
     @Override
-    public SplitResult split(int tmpInKelvin, int timeInSeconds) {
+    public SplitResult split(int tmpInKelvin, int timeInSeconds) throws MeltDownException {
         float steam = 40 * tmpInKelvin;
         float residualHeatInKelvin = timeInSeconds / 0.3f * 18;
+
+        if (tmpInKelvin > 150){
+            throw new MeltDownException("ICTIUM MELTDOWN, WE F*CKED UP AGAIN");
+        }
 
         if (tmpInKelvin > 333) {
             this.remainingPercentage = this.remainingPercentage - 0.00006f * tmpInKelvin * timeInSeconds + 0.0004f;

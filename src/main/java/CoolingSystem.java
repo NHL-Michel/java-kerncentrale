@@ -1,7 +1,6 @@
 public class CoolingSystem implements Statusable {
 
     private float waterTemp;
-    private State status;
 
     public CoolingSystem() {
         this.waterTemp = 0;
@@ -15,32 +14,21 @@ public class CoolingSystem implements Statusable {
         this.waterTemp = waterTemp;
     }
 
-    /**  getStatus()
+    /**
+     * getStatus()
      *
      * @return the state of the CoolingSystem room.
-     *
      */
-    public String getStatus(){
-        this.setStatus();
-        return this.status.toString();
-    };
-
-    /** setStatus()
-     *
-     * set the status of the CoolingSystem based on the water temperature
-     *
-     */
-    public void setStatus(){
+    public State getStatus() {
         if (this.waterTemp > 80 && this.waterTemp < 90) {
-            this.status = State.ATTENTION;
+            return State.ATTENTION;
         } else if (this.waterTemp > 90) {
-            this.status = State.UNSTABLE;
-        } else {
-            this.status = State.STABLE;
+            return State.UNSTABLE;
         }
-    };
+        return State.STABLE;
+    }
 
-    public void abductResidualHeat(float residualHeat){
+    public void abductResidualHeat(float residualHeat) {
         this.waterTemp = residualHeat * 0.50f;
     }
 
