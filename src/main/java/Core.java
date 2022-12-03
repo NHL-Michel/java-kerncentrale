@@ -6,7 +6,7 @@ public abstract class Core {
         this.remainingPercentage = FULL_PERCENTAGE;
     }
 
-    public abstract SplitResult split(int tmpInKelvin, int timeInSeconds);
+    public abstract SplitResult split(int tmpInKelvin, int timeInSeconds) throws MeltDownException;
 
     public float getRemainingPercentage() {
         return remainingPercentage;
